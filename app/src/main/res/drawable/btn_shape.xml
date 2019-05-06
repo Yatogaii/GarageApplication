@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape  xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--这一个标签实现了让按钮变成圆形-->
+    <corners
+        android:radius="360dip"/>
+    <!--尺寸代码-->
+    <size
+        android:height="20dp"
+        android:width="20dp"/>
+    <!--描边代码-->
+    <stroke
+        android:width="1dp"
+        android:color="@color/colorPrimaryDark"/>
+</shape>
