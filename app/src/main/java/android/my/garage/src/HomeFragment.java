@@ -20,7 +20,7 @@ import java.net.Socket;
 public class HomeFragment extends Fragment implements View.OnClickListener{
     final String TAG = "HomeFragment";
     MainActivity fatherActivity;
-    Handler mHandler;
+    Handler mHandler;       //myhander还没初始
     Socket toServer;
     Button firstBtn;
     Button secondBtn;

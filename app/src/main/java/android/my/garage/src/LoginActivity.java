@@ -3,6 +3,7 @@ package android.my.garage.src;
 import android.content.Intent;
 import android.my.garage.R;
 import android.my.garage.util.JDBC;
+import android.my.garage.util.ObjectBox;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,13 @@ public class LoginActivity extends AppCompatActivity {
     EditText account;
     EditText password;
     JDBC conn2Ser;
+    ObjectBox oBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
+        oBox = ObjectBox.getInstance();
         initInterface();
     }
     private void initInterface(){
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                         final int RESULT_REGISTER = 12;
                         final int RESULT_SUCCESS = 10;
                         conn2Ser = new JDBC();
+                        oBox.setPointerJDBC(conn2Ser);
                         int checkResult = conn2Ser.checkAccount(acc,pass);
                         Log.w("查询结果: ", ""+checkResult);
                         switch (checkResult){

@@ -1,5 +1,7 @@
 package android.my.garage.util;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -28,7 +30,7 @@ public class JDBC implements Serializable {
         }
     }
 
-    public int checkAccount(String account,String password){
+    public int checkAccount(String account, String password){
         JSONObject jsonObject = new JSONObject();
         int res;
         try{

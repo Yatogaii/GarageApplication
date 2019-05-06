@@ -3,6 +3,7 @@ package android.my.garage.src;
 import android.content.Intent;
 import android.my.garage.R;
 import android.my.garage.util.JDBC;
+import android.my.garage.util.ObjectBox;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -27,10 +28,13 @@ import android.widget.FrameLayout;
 * 正调试服务器端数据库，出了点bug，先去吃饭了 _mysql_connector.MySQLInterfaceError: Commands out of sync; you can't run this command now
 * 数据库bug修复，去掉commit即可，commit并没有实际作用
 * 5.2正式完成登录界面，着手准备主界面的ui设计
+*
+* 5..6差不多搞一搞handler和jdbc传输数据类的使用了
+* 写给5.7 已经用单例模式存放好handler和jdbc了，但不知道能不能用，明天试试！
 * */
 public class MainActivity extends AppCompatActivity {
-    public static int CAR_GET = 100;
-    public static int CAR_SAVE = 123;
+    public static final int CAR_GET = 100;
+    public static final int CAR_SAVE = 123;
 
     FrameLayout FrameContainer;
     Fragment homeFragment;
@@ -39,13 +43,16 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragManager;
     FragmentTransaction fragTransaction;        //以上均为Fragment的管理控件
 
-    Handler mHandler;                           //传递消息用的句柄
     BottomNavigationView bottomBar;
+
+    ObjectBox oBox;
+    Handler mHandler;                           //传递消息用的句柄
     JDBC conn2Ser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        oBox = ObjectBox.getInstance();
         setContentView(R.layout.activity_main);
         conn2Ser = (JDBC)getIntent().getSerializableExtra("Server");
         createHandler();
@@ -57,11 +64,16 @@ public class MainActivity extends AppCompatActivity {
             public void handleMessage(Message msg){
                 super.handleMessage(msg);
                 switch (msg.what){
-                    case 1:
+                    case MainActivity.CAR_GET:
+                        Log.w("handler", "handleMessage: "+conn2Ser.toString() );
+                        break;
+                    case MainActivity.CAR_SAVE:
+                        Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                 }
             }
         };
+        oBox.setmHandler(mHandler);
     }
 
     public Handler getmHandler() {
@@ -74,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         FrameContainer = findViewById(R.id.container_frag);
         homeFragment = new HomeFragment();
         settingFragment = new SettingFragment();
-        /* 传输数据用的bundle */
         fragTransaction = fragManager.beginTransaction();
         fragTransaction.add(R.id.container_frag,homeFragment).hide(homeFragment);
         fragTransaction.add(R.id.container_frag,settingFragment).hide(settingFragment);
