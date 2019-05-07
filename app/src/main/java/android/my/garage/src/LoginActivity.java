@@ -5,6 +5,7 @@ import android.my.garage.R;
 import android.my.garage.util.JDBC;
 import android.my.garage.util.ObjectBox;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -47,7 +48,9 @@ public class LoginActivity extends AppCompatActivity {
                         final int RESULT_REGISTER = 12;
                         final int RESULT_SUCCESS = 10;
                         conn2Ser = new JDBC();
+                        /* jdbc辅助类的传递 */
                         oBox.setPointerJDBC(conn2Ser);
+
                         int checkResult = conn2Ser.checkAccount(acc,pass);
                         Log.w("查询结果: ", ""+checkResult);
                         switch (checkResult){
@@ -76,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
     private void startAct(){
         Intent intent = new Intent();
         intent.setClass(getApplicationContext(),MainActivity.class);
-        intent.putExtra("Server",conn2Ser);
         startActivity(intent);
     }
 }

@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         oBox = ObjectBox.getInstance();
         setContentView(R.layout.activity_main);
-        conn2Ser = (JDBC)getIntent().getSerializableExtra("Server");
         createHandler();
         initInterface();
     }
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         oBox.setmHandler(mHandler);
+        conn2Ser = oBox.getPointerJDBC();
     }
 
     public Handler getmHandler() {

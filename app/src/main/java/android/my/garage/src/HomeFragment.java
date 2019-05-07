@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.my.garage.R;
+import android.my.garage.util.ObjectBox;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     Button sevenBtn;
     Button eightBtn;
     EditText garageNum;
+    ObjectBox oBox = ObjectBox.getInstance();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_home,container,false);
@@ -102,7 +104,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         super.onAttach(context);
         if (context instanceof MainActivity){   //如果context类是MainActivity的一个实例
             fatherActivity = (MainActivity) context;
-            mHandler = fatherActivity.getmHandler();
+            /* 用这个方法也是可以的 */
+//            mHandler = fatherActivity.getmHandler();
+            mHandler = oBox.getmHandler();
         }
     }
 }
