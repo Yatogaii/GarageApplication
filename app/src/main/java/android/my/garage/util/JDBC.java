@@ -19,11 +19,13 @@ public class JDBC implements Serializable {
     private Socket socket;
     DataOutputStream dos;
     DataInputStream dis;
+    byte[] recBuf;
     public JDBC(){
         try{
             socket = new Socket("112.74.163.49",8080);
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
+            recBuf = new byte[1024];
             Log.w(TAG, "JDBC: 数据库链接完成");
         }catch (Exception e){
             e.printStackTrace();
@@ -39,15 +41,30 @@ public class JDBC implements Serializable {
             jsonObject.put("password",password);
             String json = jsonObject.toString();
             dos.write(json.getBytes());
-            byte[] bytes = new byte[1024]; //会报错java.lang.NumberFormatException: Invalid int: "12�����������������������������������
-            int length = dis.read(bytes);
-            String str = new String(bytes,0,length);
+            int length = dis.read(recBuf);
+            String str = new String(recBuf,0,length);
             res = Integer.parseInt(str);
             return res;
         }catch (Exception e){
             e.printStackTrace();
         }
         return -100;
+    }
+
+    public boolean carAction(int action){
+        try{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("action",action);
+            String json = jsonObject.toString();
+            dos.write(json.getBytes());
+            int len = dis.read(recBuf);
+            int res = Integer.parseInt(new String(recBuf,0,len));
+            if(res !=0)
+                return true;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Socket getSocket(){

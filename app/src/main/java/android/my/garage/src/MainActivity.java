@@ -31,6 +31,7 @@ import android.widget.FrameLayout;
 *
 * 5..6差不多搞一搞handler和jdbc传输数据类的使用了
 * 写给5.7 已经用单例模式存放好handler和jdbc了，但不知道能不能用，明天试试！
+* 5.8 还差服务器端和单片机 还有app和服务器的信息完善 还有app界面完善
 * */
 public class MainActivity extends AppCompatActivity {
     public static final int CAR_GET = 100;
@@ -64,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case MainActivity.CAR_GET:
+                        conn2Ser.carAction(MainActivity.CAR_GET);
                         Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                     case MainActivity.CAR_SAVE:
+                        conn2Ser.carAction(MainActivity.CAR_SAVE);
                         Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                 }
