@@ -35,6 +35,7 @@ import android.widget.FrameLayout;
 * */
 public class MainActivity extends AppCompatActivity {
     public static final int CAR_GET = 100;
+    public static final int ACTION_LOGIN = -100;
     public static final int CAR_SAVE = 123;
 
     FrameLayout FrameContainer;
@@ -65,11 +66,21 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case MainActivity.CAR_GET:
-                        conn2Ser.carAction(MainActivity.CAR_GET);
+                        new Thread(){
+                            @Override
+                            public void run(){
+                                conn2Ser.carAction(MainActivity.CAR_GET);
+                            }
+                        };
                         Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                     case MainActivity.CAR_SAVE:
-                        conn2Ser.carAction(MainActivity.CAR_SAVE);
+                        new Thread(){
+                            @Override
+                            public void run(){
+                                conn2Ser.carAction(MainActivity.CAR_SAVE);
+                            }
+                        };
                         Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                 }

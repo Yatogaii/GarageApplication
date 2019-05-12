@@ -66,6 +66,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             case R.id.firstBtn:
                 Log.w(TAG, "onClick: "+"点击了第一个按钮");
                 break;
+            case R.id.accountSetting:
+                Log.w(TAG, "onClick: 点击了设置密码的界面" );
+                break;
         }
     }
     /* 弹出对话框决定用户的行动 */
@@ -88,6 +91,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 Log.w(TAG, "onClick: 有用户存车");
                 Message message = new Message();
                 message.what = MainActivity.CAR_SAVE;
+                mHandler.sendMessage(message);  //不需要多余的信息，只需要发送给Main一个标志位即可
             }
         });
         AlertDialog alertDialog = alertBuilder.create();

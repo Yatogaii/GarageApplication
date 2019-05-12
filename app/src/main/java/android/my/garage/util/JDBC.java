@@ -36,7 +36,7 @@ public class JDBC implements Serializable {
         JSONObject jsonObject = new JSONObject();
         int res;
         try{
-            jsonObject.put("action",100);
+            jsonObject.put("action",-100);
             jsonObject.put("account",account);
             jsonObject.put("password",password);
             String json = jsonObject.toString();
@@ -57,6 +57,7 @@ public class JDBC implements Serializable {
             jsonObject.put("action",action);
             String json = jsonObject.toString();
             dos.write(json.getBytes());
+            Log.w(TAG, "carAction: 发送成功"+json);
             int len = dis.read(recBuf);
             int res = Integer.parseInt(new String(recBuf,0,len));
             if(res !=0)
