@@ -34,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         account = findViewById(R.id.account);
         password = findViewById(R.id.password);
+        conn2Ser = new JDBC();
+        /* jdbc辅助类的传递 */
+        oBox.setPointerJDBC(conn2Ser);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,9 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                         final int RESULT_ERROR = 11;
                         final int RESULT_REGISTER = 12;
                         final int RESULT_SUCCESS = 10;
-                        conn2Ser = new JDBC();
-                        /* jdbc辅助类的传递 */
-                        oBox.setPointerJDBC(conn2Ser);
 
                         int checkResult = conn2Ser.checkAccount(acc,pass);
                         Log.w("查询结果: ", ""+checkResult);

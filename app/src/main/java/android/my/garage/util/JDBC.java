@@ -22,9 +22,7 @@ public class JDBC implements Serializable {
     byte[] recBuf;
     public JDBC(){
         try{
-            socket = new Socket("112.74.163.49",8080);
-            dos = new DataOutputStream(socket.getOutputStream());
-            dis = new DataInputStream(socket.getInputStream());
+            getConnect();
             recBuf = new byte[1024];
             Log.w(TAG, "JDBC: 数据库链接完成");
         }catch (Exception e){
@@ -33,6 +31,7 @@ public class JDBC implements Serializable {
     }
 
     public int checkAccount(String account, String password){
+        getConnect();
         JSONObject jsonObject = new JSONObject();
         int res;
         try{
@@ -40,6 +39,7 @@ public class JDBC implements Serializable {
             jsonObject.put("account",account);
             jsonObject.put("password",password);
             String json = jsonObject.toString();
+            Log.w(TAG, "checkAccount: "+json );
             dos.write(json.getBytes());
             int length = dis.read(recBuf);
             String str = new String(recBuf,0,length);
@@ -51,23 +51,34 @@ public class JDBC implements Serializable {
         return -100;
     }
 
-    public boolean carAction(int action){
+    public void carAction(final int action){
+        getConnect();
+        new Thread(){
+            @Override
+            public void run(){
+                try{
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("action",action);
+                    String json = jsonObject.toString();
+                    dos.write(json.getBytes());
+                    Log.w(TAG, "carAction: 发送成功"+json);
+                    int len = dis.read(recBuf);
+                    int res = Integer.parseInt(new String(recBuf,0,len));
+                }catch (Exception e){e.printStackTrace();}
+            }
+        }.start();
+    }
+    private void getConnect(){
         try{
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("action",action);
-            String json = jsonObject.toString();
-            dos.write(json.getBytes());
-            Log.w(TAG, "carAction: 发送成功"+json);
-            int len = dis.read(recBuf);
-            int res = Integer.parseInt(new String(recBuf,0,len));
-            if(res !=0)
-                return true;
+        if (socket == null || !socket.isConnected()){
+            socket = new Socket("112.74.163.49",8080);
+            dos = new DataOutputStream(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+        }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return false;
     }
-
     public Socket getSocket(){
         return socket;
     }
