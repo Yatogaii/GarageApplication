@@ -7,6 +7,7 @@
     android:background="@color/colorWhite">
 
     <EditText
+        android:id="@+id/garageNum"
         android:layout_width="139dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -42,6 +43,7 @@
         android:id="@+id/secondBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/btn_shape"
         android:text="2"
         android:theme="@style/RippleWhite"
@@ -49,8 +51,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintTop_toBottomOf="@+id/fourBtn"
+        app:layout_constraintVertical_bias="0.613" />
 
     <Button
         android:id="@+id/thirdBtn"
@@ -65,10 +67,10 @@
         android:theme="@style/RippleWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.792"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.696" />
+        app:layout_constraintHorizontal_bias="0.649"
+        app:layout_constraintStart_toEndOf="@+id/eightBtn"
+        app:layout_constraintTop_toBottomOf="@+id/firstBtn"
+        app:layout_constraintVertical_bias="0.412" />
 
     <Button
         android:id="@+id/fourBtn"
@@ -88,12 +90,13 @@
         android:id="@+id/fiveBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/btn_shape"
         android:text="5"
         android:theme="@style/RippleWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.281"
+        app:layout_constraintEnd_toStartOf="@+id/firstBtn"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.382" />
@@ -145,8 +148,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.696" />
+        app:layout_constraintTop_toBottomOf="@+id/fiveBtn"
+        app:layout_constraintVertical_bias="0.412" />
 
     <TextView
         android:id="@+id/textView3"

@@ -1,7 +1,9 @@
 package android.my.garage.src;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.my.garage.R;
+import android.my.garage.util.ActionMes;
 import android.my.garage.util.JDBC;
 import android.my.garage.util.ObjectBox;
 import android.os.Handler;
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         createHandler();
         initInterface();
     }
+    @SuppressLint("HandlerLeak")
     private void createHandler(){
         mHandler = new Handler(){
             @Override
@@ -66,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case MainActivity.CAR_GET:
-                        conn2Ser.carAction(MainActivity.CAR_GET);
+                        conn2Ser.carAction((ActionMes) msg.obj);
                         Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                     case MainActivity.CAR_SAVE:
-                        conn2Ser.carAction(MainActivity.CAR_SAVE);
+                        conn2Ser.carAction((ActionMes) msg.obj);
                         Log.w("handler", "handleMessage: "+conn2Ser.toString() );
                         break;
                 }

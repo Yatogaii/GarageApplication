@@ -51,14 +51,17 @@ public class JDBC implements Serializable {
         return -100;
     }
 
-    public void carAction(final int action){
+    public void carAction(final ActionMes action){
         getConnect();
         new Thread(){
             @Override
             public void run(){
                 try{
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("action",action);
+                    int actionCode = action.getAction().equals("CAR_GET") ? 100 : 123;
+                    String msg = ""+action.getGarageID() + (actionCode == 100 ? 'p' : 't')+ action.getNum();
+                    jsonObject.put("action",actionCode);
+                    jsonObject.put("message",msg);
                     String json = jsonObject.toString();
                     dos.write(json.getBytes());
                     Log.w(TAG, "carAction: 发送成功"+json);

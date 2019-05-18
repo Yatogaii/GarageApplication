@@ -2,6 +2,8 @@ package android.my.garage.util;
 
 import android.os.Handler;
 
+import java.util.HashMap;
+
 public class ObjectBox {
     private static final ObjectBox ourInstance = new ObjectBox();
     private JDBC pointerJDBC;
