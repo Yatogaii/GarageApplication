@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arr_snniper">
+        <item>旋转车库1号</item>
+        <item>旋转车库2号</item>
+        <item>旋转车库3号</item>
+        <item>旋转车库4号</item>
+        <item>旋转车库5号</item>
+        <item>旋转车库6号</item>
+        <item>旋转车库7号</item>
+        <item>旋转车库8号</item>
+        <item>旋转车库9号</item>
+    </string-array>
+</resources>

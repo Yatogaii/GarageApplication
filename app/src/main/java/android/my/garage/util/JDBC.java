@@ -1,5 +1,6 @@
 package android.my.garage.util;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -22,7 +23,12 @@ public class JDBC implements Serializable {
     byte[] recBuf;
     public JDBC(){
         try{
-            getConnect();
+            new Thread(){
+                @Override
+                public void run(){
+                    getConnect();
+                }
+            }.start();
             recBuf = new byte[1024];
             Log.w(TAG, "JDBC: 数据库链接完成");
         }catch (Exception e){

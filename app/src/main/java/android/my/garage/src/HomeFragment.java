@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -37,9 +39,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     Button sixBtn;
     Button sevenBtn;
     Button eightBtn;
-    EditText garageNum;
+    Spinner garageNum;
+    Button asyBtn;
     ObjectBox oBox = ObjectBox.getInstance();
     HashMap<Integer,Integer> garageID_Map;
+    int currentGarage,bakGarage;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_home,container,false);
@@ -57,6 +61,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         sevenBtn = view.findViewById(R.id.sevenBtn);
         eightBtn = view.findViewById(R.id.eightBtn);
         garageNum = view.findViewById(R.id.garageNum);
+        asyBtn = view.findViewById(R.id.asy_num);
         garageID_Map = new HashMap<>();
         garageID_Map.put(R.id.firstBtn,1);
         garageID_Map.put(R.id.secondBtn,2);
@@ -74,12 +79,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         sixBtn.setOnClickListener(this);
         sevenBtn.setOnClickListener(this);
         eightBtn.setOnClickListener(this);
-    }
+        asyBtn.setOnClickListener(this);
+        garageNum.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.w(TAG, "onItemClick:第"+position+1+"号车库");
+                bakGarage = position + 1;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.asy_num){
+            currentGarage = bakGarage;
+            return ;
+        }
         /* 先判断车库号里面是否有数据 */
-        if (garageNum.getText().toString().equals("") || garageNum == null){
+        if (currentGarage == 0){
             Toast.makeText(getContext(),"请先确认车库号！",Toast.LENGTH_LONG).show();
             return;
         }
@@ -98,7 +119,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         /* 创建弹出对话框 */
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
         final int num = garageID_Map.get(id);
-        final int garageNo = Integer.parseInt(garageNum.getText().toString());
+        final int garageNo = currentGarage;
         alertBuilder.setTitle("请选择您要做的操作");
         alertBuilder.setPositiveButton("取车", new DialogInterface.OnClickListener() {
             @Override
